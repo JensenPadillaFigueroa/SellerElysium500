@@ -1,0 +1,337 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+
+  /* Ink scale — defaults to DARK theme values (see [data-theme='light'] below for overrides) */
+  --color-ink-50: #f5f7fa;
+  --color-ink-100: #e4e7ec;
+  --color-ink-200: #cbd2db;
+  --color-ink-300: #9aa3b2;
+  --color-ink-400: #6b7280;
+  --color-ink-500: #4b5563;
+  --color-ink-600: #2b313b;
+  --color-ink-700: #1d222b;
+  --color-ink-800: #141820;
+  --color-ink-900: #0b0e14;
+  --color-ink-950: #06080c;
+
+  --color-brand-50: #ecfdf7;
+  --color-brand-100: #d1fae5;
+  --color-brand-200: #a7f3d0;
+  --color-brand-300: #6ee7b7;
+  --color-brand-400: #34d399;
+  --color-brand-500: #10b981;
+  --color-brand-600: #059669;
+  --color-brand-700: #047857;
+  --color-brand-800: #065f46;
+  --color-brand-900: #064e3b;
+
+  --color-accent-400: #a78bfa;
+  --color-accent-500: #8b5cf6;
+  --color-accent-600: #7c3aed;
+
+  --color-warn-500: #f59e0b;
+  --color-danger-500: #ef4444;
+
+  /* Semantic tokens (swap per theme) */
+  --color-canvas: var(--color-ink-950);
+  --color-surface-1: #0e1420;
+  --color-surface-2: #151b28;
+  --color-text-primary: #ffffff;
+  --color-text-muted: #cbd2db;
+  --color-text-subtle: #9aa3b2;
+  --color-border-soft: rgba(255, 255, 255, 0.06);
+  --color-border-strong: rgba(255, 255, 255, 0.15);
+
+  /* Signal tints (opacity-tinted lines on signal colors — adjust in light) */
+  --tint-white-005: rgba(255, 255, 255, 0.05);
+  --tint-white-008: rgba(255, 255, 255, 0.08);
+  --tint-white-010: rgba(255, 255, 255, 0.10);
+  --tint-white-015: rgba(255, 255, 255, 0.15);
+
+  /* Breakpoints — Tailwind v4 defaults extended for 2xl polish */
+  --breakpoint-xs: 22rem;
+}
+
+/* ============================================================
+   LIGHT THEME — everything below swaps when <html data-theme="light">
+   ============================================================ */
+[data-theme='light'] {
+  color-scheme: light;
+
+  /* Invert ink scale so that names still express "background darkness" semantically */
+  --color-ink-50: #0b0e14;
+  --color-ink-100: #11161f;
+  --color-ink-200: #1d2230;
+  --color-ink-300: #3d4656;
+  --color-ink-400: #6b7280;
+  --color-ink-500: #8a93a0;
+  --color-ink-600: #b5bcc7;
+  --color-ink-700: #d4d9e1;
+  --color-ink-800: #e8ebf1;
+  --color-ink-900: #ffffff;
+  --color-ink-950: #f4f6fb;
+
+  --color-canvas: #f4f6fb;
+  --color-surface-1: #ffffff;
+  --color-surface-2: #eef1f7;
+  --color-text-primary: #0b0e14;
+  --color-text-muted: #3d4656;
+  --color-text-subtle: #6b7280;
+  --color-border-soft: rgba(11, 14, 22, 0.08);
+  --color-border-strong: rgba(11, 14, 22, 0.18);
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  html {
+    transition: background-color 0.35s ease, color 0.35s ease;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-canvas);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-image:
+      radial-gradient(1200px 600px at 10% -10%, rgba(16, 185, 129, 0.10), transparent 60%),
+      radial-gradient(900px 500px at 110% 10%, rgba(139, 92, 246, 0.10), transparent 60%),
+      radial-gradient(800px 500px at 50% 120%, rgba(16, 185, 129, 0.06), transparent 60%);
+    background-attachment: fixed;
+    transition: background-color 0.35s ease, color 0.35s ease;
+  }
+
+  [data-theme='light'] body {
+    background-image:
+      radial-gradient(1200px 600px at 10% -10%, rgba(16, 185, 129, 0.14), transparent 60%),
+      radial-gradient(900px 500px at 110% 10%, rgba(139, 92, 246, 0.12), transparent 60%),
+      radial-gradient(800px 500px at 50% 120%, rgba(16, 185, 129, 0.08), transparent 60%);
+  }
+
+  ::selection {
+    background: rgba(16, 185, 129, 0.35);
+    color: #ecfdf7;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(127, 127, 127, 0.25) transparent;
+  }
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: rgba(127, 127, 127, 0.25);
+    border-radius: 999px;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background: rgba(127, 127, 127, 0.45);
+  }
+
+  /* Prevent horizontal scroll on ultra-narrow viewports */
+  html, body {
+    overflow-x: hidden;
+  }
+
+  /* Better touch handling on mobile */
+  button, a {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+@utility font-display {
+  font-family: var(--font-display);
+}
+
+@utility glass {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+[data-theme='light'] .glass {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.55));
+  border: 1px solid rgba(11, 14, 22, 0.08);
+  box-shadow: 0 1px 3px rgba(11, 14, 22, 0.04), 0 8px 24px -12px rgba(11, 14, 22, 0.08);
+}
+
+@utility glass-strong {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+[data-theme='light'] .glass-strong {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.75));
+  border: 1px solid rgba(11, 14, 22, 0.1);
+  box-shadow: 0 2px 6px rgba(11, 14, 22, 0.05), 0 12px 32px -12px rgba(11, 14, 22, 0.12);
+}
+
+@utility text-gradient-brand {
+  background: linear-gradient(135deg, #34d399 0%, #10b981 40%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+[data-theme='light'] .text-gradient-brand {
+  background: linear-gradient(135deg, #059669 0%, #10b981 40%, #7c3aed 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+@utility bg-gradient-brand {
+  background: linear-gradient(135deg, #10b981 0%, #059669 60%, #8b5cf6 140%);
+}
+
+@utility bg-gradient-brand-soft {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%);
+}
+
+@utility ring-brand {
+  box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.4), 0 0 32px rgba(16, 185, 129, 0.2);
+}
+
+@utility grid-lines {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+[data-theme='light'] .grid-lines {
+  background-image:
+    linear-gradient(rgba(11, 14, 22, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(11, 14, 22, 0.05) 1px, transparent 1px);
+}
+
+@utility safe-bottom {
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 0.5rem);
+}
+
+@utility safe-top {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+@utility card-hover {
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-2px);
+  border-color: rgba(16, 185, 129, 0.35);
+  box-shadow: 0 10px 40px -15px rgba(16, 185, 129, 0.3);
+}
+[data-theme='light'] .card-hover:hover {
+  border-color: rgba(16, 185, 129, 0.45);
+  box-shadow: 0 16px 42px -18px rgba(16, 185, 129, 0.35), 0 4px 14px -8px rgba(11, 14, 22, 0.1);
+}
+
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6); }
+  70% { box-shadow: 0 0 0 12px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.pulse-ring {
+  animation: pulse-ring 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2.2s linear infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* ============================================================
+   LIGHT THEME — hard-coded utility overrides
+   Required for Tailwind classes that generate literal white/black colors
+   (text-white, border-white/X, bg-white/X, ring-ink-950) — these can't
+   swap via CSS variables alone.
+   ============================================================ */
+[data-theme='light'] .text-white { color: var(--color-text-primary); }
+[data-theme='light'] .text-white\/5 { color: rgba(11, 14, 22, 0.06); }
+[data-theme='light'] .text-white\/10 { color: rgba(11, 14, 22, 0.12); }
+[data-theme='light'] .text-white\/80 { color: rgba(11, 14, 22, 0.78); }
+
+/* Backgrounds (arbitrary + shorthand) */
+[data-theme='light'] .bg-white\/\[0\.02\],
+[data-theme='light'] .bg-white\/5 { background-color: rgba(11, 14, 22, 0.035); }
+[data-theme='light'] .bg-white\/\[0\.03\] { background-color: rgba(11, 14, 22, 0.045); }
+[data-theme='light'] .bg-white\/\[0\.04\] { background-color: rgba(11, 14, 22, 0.055); }
+[data-theme='light'] .bg-white\/\[0\.05\] { background-color: rgba(11, 14, 22, 0.065); }
+[data-theme='light'] .bg-white\/\[0\.06\] { background-color: rgba(11, 14, 22, 0.075); }
+[data-theme='light'] .bg-white\/\[0\.08\] { background-color: rgba(11, 14, 22, 0.09); }
+[data-theme='light'] .bg-white\/\[0\.1\],
+[data-theme='light'] .bg-white\/10 { background-color: rgba(11, 14, 22, 0.12); }
+[data-theme='light'] .bg-white\/15 { background-color: rgba(11, 14, 22, 0.18); }
+[data-theme='light'] .bg-white\/20 { background-color: rgba(11, 14, 22, 0.22); }
+[data-theme='light'] .hover\:bg-white\/\[0\.03\]:hover { background-color: rgba(11, 14, 22, 0.045); }
+[data-theme='light'] .hover\:bg-white\/\[0\.04\]:hover { background-color: rgba(11, 14, 22, 0.055); }
+[data-theme='light'] .hover\:bg-white\/\[0\.05\]:hover { background-color: rgba(11, 14, 22, 0.065); }
+[data-theme='light'] .hover\:bg-white\/\[0\.06\]:hover { background-color: rgba(11, 14, 22, 0.08); }
+[data-theme='light'] .hover\:bg-white\/\[0\.08\]:hover { background-color: rgba(11, 14, 22, 0.09); }
+[data-theme='light'] .hover\:bg-white\/\[0\.1\]:hover,
+[data-theme='light'] .hover\:bg-white\/10:hover { background-color: rgba(11, 14, 22, 0.12); }
+
+/* Borders — slightly darker in light mode for visible definition */
+[data-theme='light'] .border-white\/5 { border-color: rgba(11, 14, 22, 0.06); }
+[data-theme='light'] .border-white\/8 { border-color: rgba(11, 14, 22, 0.08); }
+[data-theme='light'] .border-white\/10 { border-color: rgba(11, 14, 22, 0.10); }
+[data-theme='light'] .border-white\/12 { border-color: rgba(11, 14, 22, 0.12); }
+[data-theme='light'] .border-white\/15 { border-color: rgba(11, 14, 22, 0.16); }
+[data-theme='light'] .border-white\/30 { border-color: rgba(11, 14, 22, 0.25); }
+[data-theme='light'] .hover\:border-white\/15:hover { border-color: rgba(11, 14, 22, 0.18); }
+[data-theme='light'] .focus-within\:border-white\/15:focus-within { border-color: rgba(11, 14, 22, 0.18); }
+
+/* Bottom/top border flavors used for section dividers */
+[data-theme='light'] .border-b.border-white\/5 { border-bottom-color: rgba(11, 14, 22, 0.06); }
+[data-theme='light'] .border-t.border-white\/5 { border-top-color: rgba(11, 14, 22, 0.06); }
+
+/* Ring colors used for avatar/badge ring effects */
+[data-theme='light'] .ring-white\/10 { --tw-ring-color: rgba(11, 14, 22, 0.12); }
+[data-theme='light'] .ring-ink-950 { --tw-ring-color: var(--color-canvas); }
+[data-theme='light'] .ring-offset-ink-950 { --tw-ring-offset-color: var(--color-canvas); }
+
+/* Avatar gradient rings look too bold in light mode — soften */
+[data-theme='light'] .shadow-lg.shadow-black\/30 { box-shadow: 0 8px 24px -10px rgba(11, 14, 22, 0.22); }
+
+/* TopBar / Sidebar surface — make them clearly white-ish in light mode */
+[data-theme='light'] .bg-ink-950\/60 { background-color: rgba(255, 255, 255, 0.7); }
+[data-theme='light'] .bg-ink-950\/40 { background-color: rgba(255, 255, 255, 0.6); }
+
+/* Selection */
+[data-theme='light'] ::selection {
+  background: rgba(16, 185, 129, 0.25);
+  color: #052e1c;
+}
