@@ -4,10 +4,15 @@ import babel from '@rolldown/plugin-babel'
 import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
-export default defineConfig({
+// `base` is set for GitHub Pages (served at /SellerElysium500/).
+// Override locally or in other hosts by setting VITE_BASE=/ at build time.
+const base = process.env.VITE_BASE ?? '/SellerElysium500/'
+
+export default defineConfig(({ command }) => ({
+  base: command === 'build' ? base : '/',
   plugins: [
     react(),
     babel({ presets: [reactCompilerPreset()] }),
     tailwindcss(),
   ],
-})
+}))
